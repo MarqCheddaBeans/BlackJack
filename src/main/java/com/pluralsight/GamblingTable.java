@@ -50,35 +50,46 @@ public class GamblingTable {
                 //Calls Deck deal() method, store card in variable named dealtCard
                 Card dealtCard = deck.deal();
                 //Flips card to reveal actual values
-                dealtCard.flip();
+                //dealtCard.flip();
                 //Adds dealt card to player hand
                 hands.get(i).deal(dealtCard);
-
-                System.out.println("Cards dealt: \n" + dealtCard.getSuit() + " " + dealtCard.getValue());
             }
         }
 
+        //Display each players hand and calculate values
+        int highestScore = 0;
+        String winner = "";
 
+        //cycle through list of players
+        for(int i = 0; i < numOfPlayers; i++){
+            //retrieves name from player
+            Player player = gamblers.get(i);
+            //Retrieves hand from player
+            Hand hand = hands.get(i);
+            //Uses getValue method to get card values
+            int score = hand.getValue();
 
+            System.out.println("\n" + player.getName() + "'s hand:");
 
+            //Show cards in hand with getter
+            for (Card card: hand.getCards()){
+                //flip method to allow card to be displayed
+                card.flip();
+                System.out.println(card.getValue() + " of " + card.getSuit());
+            }
 
+            System.out.println("Total value: " + score);
 
+            //check for highest score that is not over 21
+            if (score <= 21 && score > highestScore){
 
+                highestScore = score;
+                winner = player.getName();
 
+            }
+        }
 
-//
-//
-//            deck.shuffle();
-//            // deal 5 cards from the deck and add them to the hand
-//            for (int i = 0; i < 5; i++) {
-//                // get a card from the deck
-//                Card card = deck.deal();
-//                // deal that card to the hand
-//                hand1.deal(card);
-//            }
-//
-//            //print out the value of all the cards in the hand
-//            System.out.println("This hand is worth " + hand1.getValue());
+        System.out.println("\nThe winner is: " + winner + " with score of " + highestScore);
 
     }
 }
